@@ -29,25 +29,21 @@ if __name__ == "__main__":
 
     # Parse the mapping string
     seeds_parsed = [int(val) for val in lines[0].strip('\n').split(' ')[1:]]
-    seeds = []
+    seeds = set()
     for seed in range(0, len(seeds_parsed), 2):
-        seeds.extend(list(range(seeds_parsed[seed], seeds_parsed[seed] + seeds_parsed[seed + 1])))
+        seeds.update(list(range(seeds_parsed[seed], seeds_parsed[seed] + seeds_parsed[seed + 1])))
 
     mappings = defaultdict(lambda: sects.copy())
-
+    min_location = float('inf')
     for seed in seeds:
         mappings[seed]["seed"] = seed
         sects_list = list(sects.keys())
         for index, sect in enumerate(sects_list[:-1]):
             mappings[seed][sects_list[index + 1]] = find_number(mappings[seed][sects_list[index]], parse_mapping_string(sections[index + 1]))
-
-    print(mappings)
-
-    location = []
-    for val in mappings.values():
-        location.append(val["location"])
-
-    print(min(location))
+        if mappings[seed]["location"] < min_location:
+            min_location = mappings[seed]["location"]
+        del mappings[seed]
+    print(min_location)
 
 #Part 1  525792406
 #Part 2  79004094
