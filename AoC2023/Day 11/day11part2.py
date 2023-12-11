@@ -12,8 +12,8 @@ def get_distance(x, y, row, col):
     return dist
 
 def get_total_distance(lines, space):
-    row_dict = {i:2 for i in range(len(lines))}
-    col_dict = {i:2 for i in range(len(lines[0]))}
+    row_dict = {i:space for i in range(len(lines))}
+    col_dict = {i:space for i in range(len(lines[0]))}
     galaxies = []
     for i in range(len(lines)):
         for j in range(len(lines[0])):
@@ -21,7 +21,7 @@ def get_total_distance(lines, space):
                 galaxies.append((i, j))
                 row_dict[i] = 1
                 col_dict[j] = 1
-    return (get_distance(x, y, row_dict, col_dict) for x, y in combinations(galaxies, space))
+    return (get_distance(x, y, row_dict, col_dict) for x, y in combinations(galaxies, 2))
 
 if __name__ == "__main__":
     filename = "input.txt"
@@ -35,4 +35,4 @@ if __name__ == "__main__":
 
     print(total_dist)
 
-#Part1: 9609130
+#Part2: 702152204842
